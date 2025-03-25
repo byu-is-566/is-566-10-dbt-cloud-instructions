@@ -166,7 +166,7 @@ First, dbt provide some [basic tests](https://docs.getdbt.com/docs/build/data-te
 
 To apply a test to a specific column, you'll configure them in a dedicated configuration file called `models.yml`. I've included a few sample tests in the existing `models.yml` file. (Examples of built-in tests for two different columns are configured under the `stg_adventure_db__customers` model in that file.) These built in tests are the easiest to use because you just place them on columns where you need the tests to run.
 
-Let's practice! Using the documentation linked above, figure out how to add integrity tests that ensure that the `customer_id` and `order_id` columns in the `stg_ecom__email_campaigns` model point to valid ids in the `stg_adventure_db__customers` and `stg_adventure_db__products` models, respectively. (At any time, you can test whether you have configured the tests correctly by running the `dbt test` command.)
+Let's practice! Using the documentation linked above, figure out how to add integrity tests that ensure that the `customer_id` and `order_id` columns in the `stg_ecom__email_campaigns` model point to valid ids in the `stg_adventure_db__customers` and `stg_ecom__sales_orders` models, respectively. (At any time, you can test whether you have configured the tests correctly by running the `dbt test` command.)
 
 You know what would be better than two tests? Two more. Add further tests to the `stg_ecom__email_campaigns` model, ensuring that (1) `event_id` contains unique values, and (2) the event_type column contains _only_ the following exact values: `email_opened`, `add_to_cart`, `conversion`, and `email_clicked`.
 
