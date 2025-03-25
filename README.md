@@ -1,14 +1,14 @@
 # Hands-On Lab: DataOps with dbt Cloud
 
-The dbt adventure continues! This lab will build on the foundation we started in the previous assignment, focusing on some of the more advanced capabilities of dbt. In particular, we'll be exploring how dbt's functionality can support true _DataOps_, which allows a data team to provide and maintain reliable, trustworhy data assets. This is, in many ways, the pinnacle of the modern data platform, and it's something that we've been building toward throughout the semester.
+The dbt adventure continues! This lab will build on the foundation we started in the previous assignment, focusing on some of the more advanced capabilities of dbt. In particular, we'll be exploring how dbt's functionality can support true _DataOps_, which allows a data team to provide and maintain reliable, trustworthy data assets. This is, in many ways, the pinnacle of the modern data platform, and it's something that we've been building toward throughout the semester.
 
 ---
 
 ## Overview of the Lab
 
-Just as with the previous lab, I'm going to outline goal and major steps you'll be accomplishing in the assignment. 
+Just as with the previous lab, I'm going to outline the goals and major steps you'll be accomplishing in the assignment. 
 
-**Overall Goal**: We the data flows already in place from last week's assignment, we'll be learning about how dbt's testing framework and github integration enable data teams to ensure data integrity, collaborate on a shared code base, and provide continuous integration as the warehouse schema is iteratively improved. 
+**Overall Goal**: With the data flows already in place from last week's assignment, we'll be learning about how dbt's testing framework and github integration enable data teams to ensure data integrity, collaborate on a shared code base, and provide continuous integration as the warehouse schema is iteratively improved. 
 
 Here are the general steps you'll be following:
 1. First, we'll write a couple "analysis" models that will represent the _gold layer_ of our warehouse, providing a couple of analysis-oriented table structures that will serve as the motivation for ensuring that we can trust the output of our warehouse. 
@@ -80,7 +80,7 @@ Given the goals above, you will need to edit your `.dbt/profiles.yml` file to ad
 2. Make a copy of the `dev` output section, labeled `prod`, and set the schema in that section to `dbt_prod`
 3. You shouldn't need to change this, but make sure that the `target` attribute is set to `dev`.
 
-The setup described above will allow us to follow a more real-world DataOps workflow, developing and testing within a separate schema (i.e., `dbt_dev`) in the warehouse, while only promoting chages that have been carefully reviewed and tested to the `dbt_prod` schema. The `target` attribute sets the default target to the `dev` configuration so that any changes we publish don't affect anyone outside the data team while they are still in development. 
+The setup described above will allow us to follow a more real-world DataOps workflow, developing and testing within a separate schema (i.e., `dbt_dev`) in the warehouse, while only promoting changes that have been carefully reviewed and tested to the `dbt_prod` schema. The `target` attribute sets the default target to the `dev` configuration so that any changes we publish don't affect anyone outside the data team while they are still in development. 
 
 To help add some clarity to the configuration described above, here's what your `adventure-ops` profile should look like:
 
@@ -156,7 +156,7 @@ The above might seem complex, but I think you'll find that the `count_if()` func
 
 If users are going to be running queries like the two from the previous section, then we better be _sure_ that the data that is feeding those queries is correct and reliable. To help us with this, dbt allows us to configure several kinds of "data tests" where we can express our assumptions, watch for anything strange, and be alerted if something in the data lacks integrity or accuracy.
 
-Despite the whole wide world of testing avialable to us, we're going to learn how to use just two types of tests: build-in tests and custom "generic SQL" tests. (If you want to go deep on this stuff, you're welcome to check out the very powerful [`dbt-expectations` package](https://hub.getdbt.com/calogica/dbt_expectations/latest/); we won't be going there.)
+Despite the whole wide world of testing available to us, we're going to learn how to use just two types of tests: build-in tests and custom "generic SQL" tests. (If you want to go deep on this stuff, you're welcome to check out the very powerful [`dbt-expectations` package](https://hub.getdbt.com/calogica/dbt_expectations/latest/); we won't be going there.)
 
 ---
 
@@ -168,7 +168,7 @@ To apply a test to a specific column, you'll configure them in a dedicated confi
 
 Let's practice! Using the documentation linked above, figure out how to add integrity tests that ensure that the `customer_id` and `order_id` columns in the `stg_ecom__email_campaigns` model point to valid ids in the `stg_adventure_db__customers` and `stg_adventure_db__products` models, respectively. (At any time, you can test whether you have configured the tests correctly by running the `dbt test` command.)
 
-You know what would be better than two tests? Two more. Add further tests to the `stg_ecom__email_campaigns` model, ensureing that (1) `event_id` contains unique values, and (2) the event_type column contains _only_ the following exact values: `email_opened`, `add_to_cart`, `conversion`, and `email_clicked`.
+You know what would be better than two tests? Two more. Add further tests to the `stg_ecom__email_campaigns` model, ensuring that (1) `event_id` contains unique values, and (2) the event_type column contains _only_ the following exact values: `email_opened`, `add_to_cart`, `conversion`, and `email_clicked`.
 
 After adding these tests, you can run `dbt test` and verify that you now have 8 data tests passing, as in the screenshot below:
 
@@ -183,9 +183,9 @@ If everything looks good, pat yourself on the back, grab a screenshot, and let's
 
 ### 2.2 - Custom Generic Test - `column_fully_null`
 
-If your warehouse validation requires a bit more logic than what the built-in generic tests can provide, you can define your own generic tests as simple SQL queries, saving them to the `tests/generic` directory. I have included two examles of such custom tests in that directory for you to use as a reference. (You can also check out the [documentation](https://docs.getdbt.com/docs/build/data-tests#generic-data-tests) for further discussion.)
+If your warehouse validation requires a bit more logic than what the built-in generic tests can provide, you can define your own generic tests as simple SQL queries, saving them to the `tests/generic` directory. I have included two examples of such custom tests in that directory for you to use as a reference. (You can also check out the [documentation](https://docs.getdbt.com/docs/build/data-tests#generic-data-tests) for further discussion.)
 
-Take a look at how the example tests are structured. I have included examples of a column-specific test that is designed to be configured on a specified column (see `positive_inventory_values.sql`) as well as a model-level test designed to be confgured on a model (see `preferred_vendors_credit_check.sql`). Notice that you design your test logic to fail if the query contained in the test file returns any rows. (You can also look at the way that each of these tests is configured in the original `models.yml` file I provided.)
+Take a look at how the example tests are structured. I have included examples of a column-specific test that is designed to be configured on a specified column (see `positive_inventory_values.sql`) as well as a model-level test designed to be configured on a model (see `preferred_vendors_credit_check.sql`). Notice that you design your test logic to fail if the query contained in the test file returns any rows. (You can also look at the way that each of these tests is configured in the original `models.yml` file I provided.)
 
 Okay. Your turn! First, let's write a generic test that will ensure that only currently-sold products are listed in the `stg_adventure_db__products` model. (Let's assume that products that are currently being sold are represented in the products table with a `null` in the `sell_end_date` column.) Let's call this test `column_fully_null` and write it in a way that we could reuse it on other columns in other tables if we wanted to. (In other words, just make a fairly generic test that is the logical opposite of the built-in `not_null` test.) Then configure your test to be used on the `sell_end_date` column of the `stg_adventure_db__products` model and run `dbt test` to see if you catch anything.
 
@@ -277,7 +277,7 @@ Below I have outlined the settings that you'll need to use as you set up your pr
 4. Next, you'll need to link your dbt Cloud account to your Github account. Once linked (and potentially after several redirects, etc.), you should see our classroom organization (`byu-is-566`) and be able to search for your repository. (If the search takes a while, just be patient; my search took a bit--maybe 40 seconds?--to return my repository name.)
 5. Assuming everything worked, you should be able to click on your dashboard and see your project listed at the top. Before we move on, let's just make sure that everything still runs. You can click on "Develop >> Cloud IDE" to load your project in the browser, hopefully with a familiar list of files on the left side of the window. You should see a command prompt bar at the very bottom of your screen, where you can enter `dbt build` to test and make sure everything will fly.
 
-Let's just check in and make sure you are seeing what you should see. When you run `dbt build` from the browser IDE, you should see lots of comforting green checkmarks.  I'll place a screenshot of what this should look like below so you know what you're aiming for:
+Let's just check in and make sure you are seeing what you should see. When you run `dbt build` from the browser IDE, you should see lots of comforting green checkmarks. I'll place a screenshot of what this should look like below so you know what you're aiming for:
 
 <img src="screenshots/readme_img/dbt_cloud_build.png"  width="80%">
 
@@ -298,7 +298,7 @@ Again, I'll outline the settings that you'll need to use, and you can follow alo
 2. Select the Snowflake connection you've already created, and you should hopefully see your same role, database, and warehouse populated. Leave all of these. 
 3. Below that, enter in  your username and password, and then it's **VERY IMPORTANT** that you provide then enter `dbt_prod` as the schema. Click "Test Connection" see a successful test result (hopefully), then click "Save" to save the environment settings. (You can leave the optional extended attributes empty.)
 4. Next, we're going to do an initial deployment to test our deployment flow. Use the "Create job" button, from which you should select "Deploy job". Name the Job "Manual Deployment", then leave all the rest of the settings unchanged from their default.
-5. Now you should see your new Job under "Deploy >> Jobs". You can click on the job, hit "Run now" in the upper right, and watch with anticipation while your data warehouse is deployed to the production environment. (You can click on the "Run #XXXXXXXXXX" button in your run history to watch the progress if you're so inclined.) Wohoo!
+5. Now you should see your new Job under "Deploy >> Jobs". You can click on the job, hit "Run now" in the upper right, and watch with anticipation while your data warehouse is deployed to the production environment. (You can click on the "Run #XXXXXXXXXX" button in your run history to watch the progress if you're so inclined.) Woohoo!
 7. While we're here, let's set up a "Continuous integration job" so we can use it after completing the next task. Name this something like "Prod CI Deploy", then make sure that "Triggered by pull requests" is toggled on.
 8. In the Execution settings section, let's enter three separate dbt commands to run in succession: `dbt seed`, `dbt test`, and `dbt run`. (In case you're wondering, these are the three commands that run when you use `dbt build`; it's just a good practice to separate individual processes when we anticipate things running in an automated pipeline to get the most granular information.)
 10. Now you can click "Save" without changing any other defaults. You should see your new CI job listed among the jobs, but that's all we'll verify for now.
@@ -320,7 +320,7 @@ With our warehouse deployed to the "production" schema, we're now prepared to do
 
 ### 4.1 - Create a Development Branch
 
-For anything outside of teh classroom environment, it's never a good idea to just make changes right in the main branch like we've been doing all semester. Changes should be isolated, carefully reviewed, and tested prior to being permitted into the main branch. (In fact, most main branches in real-world settings are locked down so that very specific things (such as at least 2 peer reviews of your code) have to be accomplished before you can merge any changes.)
+For anything outside of the classroom environment, it's never a good idea to just make changes right in the main branch like we've been doing all semester. Changes should be isolated, carefully reviewed, and tested prior to being permitted into the main branch. (In fact, most main branches in real-world settings are locked down so that very specific things (such as at least 2 peer reviews of your code) have to be accomplished before you can merge any changes.)
 
 To fully experience the joy of this lab and the continuous integration capabilities of dbt, we're going to complete this task in an isolated development branch. Create a new branch called `develop-enhance-email-campaign-data`, and make sure that you have switched to that branch. (If this is new territory for you, I recorded a little [screen recording](https://www.dropbox.com/scl/fi/wlugsd1x382bt4rkbg3bi/git-create-branch.mov?rlkey=oqqe7z7zj18lpafw6rejk4g6z&dl=0) to walk you through it.) Because this is important, I'm going to require that you grab a screenshot of your VSCode environment to show that you're developing changes in that new branch (see the lower left corner of my screenshot below).
 
@@ -339,8 +339,8 @@ First, you'll need to edit the `sources.yml` file in the project so that we can 
 
 Okay, now with our new source added to `sources.yml`, we can go to work integrating the new data source into our transformation pipeline. I'm going to leave you to mostly figure this out on your own as a test of your data engineering mettle, but here are a few things to keep in mind:
 - The data in the new source is stored in a single `RAW` variant column, just like the previous email data. This means that you'll want to add a new base model called `base_ecom__email_mktg_new` (see the directory tree at the top of these instructions if you need to see where it goes), and then ensure that the data from the new base model is incorporated in the downstream `stg_ecom__email_campaigns` model. 
-- Desipite the single-column nature of the new data, you'll want to look carefully at the embeded values and ensure that you're extracting everything so that the output matches the data coming from the old email system.
-- Depending on how careful you are about the previous item, you may get to experience the _thrill_ of some of our tests that we configurecd in Task 2 doing their job and ensuring that the data that makes it into the `stg_ecom__email_campaigns` model is A-OK.
+- Despite the single-column nature of the new data, you'll want to look carefully at the embedded values and ensure that you're extracting everything so that the output matches the data coming from the old email system.
+- Depending on how careful you are about the previous item, you may get to experience the _thrill_ of some of our tests that we configured in Task 2 doing their job and ensuring that the data that makes it into the `stg_ecom__email_campaigns` model is A-OK.
 - There are two ways for you to ensure that you have successfully integrated the new dataset in a way that won't get you fired from your data team. First (obviously) you'll want to be able to successfully run `dbt build` after adding the base table and making changes to the `stg_ecom__email_campaigns` model. Any tests that fail should be used to refine your implementation. Second, after successfully running `dbt build`, you should re-run the `email_campaign_performance.sql` analysis query that we ran in Task 1. The numbers should obviously be different since we added data, especially in the count columns like "Email Opened". To help you know whether you nailed the data integration, I'll share an entire row of results from the analysis query:
 
 | CUSTOMER_SEGMENT | AD_STRATEGY | PRODUCT_CATEGORY | EMAIL_OPENED | EMAILS_CLICKED | ADDED_TO_CART | CONVERSIONS |
@@ -380,7 +380,7 @@ Vague enough for you? 🙂 Sorry. Again, that's part of the experience for this 
 
 ### 5.1: Create a Pull Request
 
-With the improvements we made all collected in the development branch from Task 4, all that remains is to go through the process of merging those changed into the "main" branch of the project repository. The mechanism for doing this is called a _Pull Request_ (usually shortened coloquially to "PR"). Opening a pull request based on the changes in a branch, having the PR reviewed by other team members, and ultimately merging the changes from the development branch into the main branch--these activitites are all extremely commonplace on engineering teams, especially in the world of software engineering. But tools like dbt allow use to be just as methodical with our iterative development work on the data in our data warehouse. 
+With the improvements we made all collected in the development branch from Task 4, all that remains is to go through the process of merging those changed into the "main" branch of the project repository. The mechanism for doing this is called a _Pull Request_ (usually shortened colloquially to "PR"). Opening a pull request based on the changes in a branch, having the PR reviewed by other team members, and ultimately merging the changes from the development branch into the main branch--these activities are all extremely commonplace on engineering teams, especially in the world of software engineering. But tools like dbt allow use to be just as methodical with our iterative development work on the data in our data warehouse. 
 
 Obviously we're not working in teams, so we won't be doing any reviews of each other's code. But we are going to still go through the same motions, starting with opening the pull request. You'll do this by visiting your repository page (after pushing your changes to your development branch). You'll likely see a prompt near the top of the screen because you just pushed a branch up, but even if you don't, you can navigate to the 'Pull requests' tab, then "New pull request". Either way should present you with a screen like the one you see below, where you'll see that your development branch is planned to merge into the main branch (see the arrow direction). 
 
