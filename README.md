@@ -20,9 +20,43 @@ Like last time, I'm going to share the "ending state" folder hierarchy so that y
 
 ```bash
 is-566-10-dbt-cloud
-├── dbt_project.yml
-├── models                                                                    
-└── tests                                                             
+├── analyses                                             
+│  ├─ campaign_sales_analysis.sql        # <-- Part 1    
+│  └─ email_campaign_performance.sql     # <-- Part 1    
+├─ dbt_project.yml                                       
+├─ macros                                                
+├─ models                                                
+│  ├─ models.yml        # <-- Part 2                     
+│  ├─ intermediate                                       
+│  │  ├─ int_sales_order_line_items.sql                  
+│  │  └─ int_sales_orders_with_campaign.sql              
+│  └─ staging                                            
+│     ├─ adventure_db                                    
+│     │  ├─ stg_adventure_db__customers.sql              
+│     │  ├─ stg_adventure_db__inventory.sql              
+│     │  ├─ stg_adventure_db__product_vendors.sql        
+│     │  ├─ stg_adventure_db__products.sql               
+│     │  └─ stg_adventure_db__vendors.sql                
+│     ├─ ecom                                            
+│     │  ├─ base                                         
+│     │  │  ├─ base_ecom__email_campaigns.sql            
+│     │  │  ├─ base_ecom__email_mktg_new.sql # <-- Part 4
+│     │  │  └─ base_ecom__sales_orders.sql               
+│     │  ├─ stg_ecom__email_campaigns.sql    # <-- Part 4
+│     │  ├─ stg_ecom__purchase_orders.sql                
+│     │  └─ stg_ecom__sales_orders.sql                   
+│     └─ sources.yml                         # <-- Part 4
+├─ screenshots                                           
+├─ seeds                                                 
+│  ├─ _seeds.yml                                         
+│  ├─ measures.csv                                       
+│  └─ ship_method.csv                                    
+└─ tests                                                 
+   └─ generic                                            
+      ├─ column_fully_null.sql             # <-- Part 2  
+      ├─ positive_inventory_values.sql                   
+      ├─ preferred_vendors_credit_check.sql              
+      └─ single_conversion_per_order.sql   # <-- Part 2  
 ```
 
 Alrighty. Let's get back into the warehouse!
