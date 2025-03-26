@@ -148,7 +148,7 @@ The next analysis query will ask you to think about the information available in
 - add to cart rate (ratio of add-to-cart to clicks)
 - cart conversion rate (ratio of purchases to add-to-cart)
 
-The above might seem complex, but I think you'll find that the `count_if()` function will make quick work of most of it. To help you know that you're probably right, the conversion rate for first time customers who were in the retargeting ad strategy for accesories is **17.12%**. And the click through rate for repeat customers in the product launch strategy for bikes is **62.55%**.
+The above might seem complex, but I think you'll find that the `count_if()` function will make quick work of most of it. To help you know that you're probably right, the conversion rate for first time customers who were in the retargeting ad strategy for accessories is **17.12%**. And the click through rate for repeat customers in the product launch strategy for bikes is **62.55%**.
 
 > [!IMPORTANT]
 > 📷 Grab a screenshot of your own query results. Save this screenshot as `task_1.3.png` (or jpg) to the `screenshots` folder in the assignment repository.
