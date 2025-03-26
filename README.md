@@ -123,7 +123,10 @@ The first analysis query will summarize the total orders, average order value, a
 
 Write the query described above as a dbt analysis query, saved to `analyses/campaign_sales_analysis.sql`. When you think you have the logic right, you can run `dbt compile`, which will produce compiled SQL code for all of your dbt code, placing it in the `target/compiled` directory. The compiled analysis code will be found in `target/compiled/adventure/analyses`. You should be able to open that file and simply run it without modification. 
 
-To help you know if you're on the right track, here's a row from the output of my `campaign_sales_analysis.sql` query:
+To help you know if you're on the right track, here's a row from the output of my `campaign_sales_analysis.sql` query. 
+
+> [!TIP] 
+> If your result for `TOTAL_REVENUE` is about 5x what mine is below, there is a pull request sitting in your repository with a small-but-important bug fix where I had a one-character typo in my `stg_ecom__sales_orders` model that cause some row duplication. Merge that one line change into your repository, re-run `dbt build`, and your numbers should now match mine below.
 
 | CUSTOMER_SEGMENT     | AD_STRATEGY    | PRODUCT_CATEGORY | TOTAL_ORDERS | TOTAL_REVENUE | AVG_ORDER_VALUE |
 |----------------------|----------------|------------------|--------------|---------------|-----------------| 
