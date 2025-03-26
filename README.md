@@ -170,7 +170,7 @@ Let's practice! Using the documentation linked above, figure out how to add inte
 
 You know what would be better than two tests? Two more. Add further tests to the `stg_ecom__email_campaigns` model, ensuring that (1) `event_id` contains unique values, and (2) the event_type column contains _only_ the following exact values: `email_opened`, `add_to_cart`, `conversion`, and `email_clicked`.
 
-After adding these tests, you can run `dbt test` and verify that you now have 8 data tests passing, as in the screenshot below:
+After adding these tests, you can run `dbt test` and verify that you now have 9 data tests passing, as in the screenshot below:
 
 <img src="screenshots/readme_img/built_in_tests.png"  width="80%">
 
