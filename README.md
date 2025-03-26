@@ -337,6 +337,14 @@ The scenario I've manufactured for this task is that at the beginning of 2014 (!
 
 First, you'll need to edit the `sources.yml` file in the project so that we can connect to the new "external" system (really it's just a new schema in our central `is566` database). You can just paste the lines below into the list of sources to make the data available to your models as a table called `email_mktg_raw` in a source called `new_mktg`. You can ignore the fancy `{{ }}` syntax in the schema; this just follows the theme of our CI workflow for this task, where we develop the integration with a sample export of the data from the new system (in a smaller `new_mktg_dev` schema) and then deploy to production with the "production" version of the data (in a larger `new_mktg_prod` schema). (The data is structured the same in both schemas.) 
 
+```yaml
+  - name: new_mktg
+    database: is566
+    schema: "{{ 'new_mktg_dev' if target.name == 'dev' else 'new_mktg_prod' }}"
+    tables:
+      - name: email_mktg_raw
+```
+
 Okay, now with our new source added to `sources.yml`, we can go to work integrating the new data source into our transformation pipeline. I'm going to leave you to mostly figure this out on your own as a test of your data engineering mettle, but here are a few things to keep in mind:
 - The data in the new source is stored in a single `RAW` variant column, just like the previous email data. This means that you'll want to add a new base model called `base_ecom__email_mktg_new` (see the directory tree at the top of these instructions if you need to see where it goes), and then ensure that the data from the new base model is incorporated in the downstream `stg_ecom__email_campaigns` model. 
 - Despite the single-column nature of the new data, you'll want to look carefully at the embedded values and ensure that you're extracting everything so that the output matches the data coming from the old email system.
