@@ -127,7 +127,7 @@ To help you know if you're on the right track, here's a row from the output of m
 
 | CUSTOMER_SEGMENT     | AD_STRATEGY    | PRODUCT_CATEGORY | TOTAL_ORDERS | TOTAL_REVENUE | AVG_ORDER_VALUE |
 |----------------------|----------------|------------------|--------------|---------------|-----------------| 
-| repeat_customers     | product_launch | Accessories      | 264          | 1829832.33    | 1386.24         | 
+| repeat_customers     | product_launch | Accessories      | 264          | 365966.47     | 1386.24         | 
 
 > [!IMPORTANT]
 > 📷 Grab a screenshot of (all of) your own query results. Save this screenshot as `task_1.2.png` (or jpg) to the `screenshots` folder in the assignment repository.
