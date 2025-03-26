@@ -303,7 +303,7 @@ Again, I'll outline the settings that you'll need to use, and you can follow alo
 4. Next, we're going to do an initial deployment to test our deployment flow. Use the "Create job" button, from which you should select "Deploy job". Name the Job "Manual Deployment", then leave all the rest of the settings unchanged from their default.
 5. Now you should see your new Job under "Deploy >> Jobs". You can click on the job, hit "Run now" in the upper right, and watch with anticipation while your data warehouse is deployed to the production environment. (You can click on the "Run #XXXXXXXXXX" button in your run history to watch the progress if you're so inclined.) Woohoo!
 7. While we're here, let's set up a "Continuous integration job" so we can use it after completing the next task. Name this something like "Prod CI Deploy", then make sure that "Triggered by pull requests" is toggled on.
-8. In the Execution settings section, let's enter three separate dbt commands to run in succession: `dbt seed`, `dbt test`, and `dbt run`. (In case you're wondering, these are the three commands that run when you use `dbt build`; it's just a good practice to separate individual processes when we anticipate things running in an automated pipeline to get the most granular information.)
+8. In the Execution settings section, let's just enter a standard `dbt build` command.
 10. Now you can click "Save" without changing any other defaults. You should see your new CI job listed among the jobs, but that's all we'll verify for now.
 
 If you click on "Deploy >> Run history" you should see at least one successful run listed there, similar to my screenshot below (though I ran mine twice to make sure I documented everything for you).
