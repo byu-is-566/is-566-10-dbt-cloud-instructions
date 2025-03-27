@@ -272,6 +272,8 @@ Okay, then. All pushed up? Ready to go?
 > [!IMPORTANT]
 > We need to set up dbt Cloud setup very carefully to ensure that the rest of the assignment goes as intended, so please pay close attention to the various settings and configurations I'm going to describe in this section. 
 
+You will first need to create a dbt Cloud account [here](https://www.getdbt.com/signup). You can make this account using whatever email address you want. (It'll say that you're starting a free trial of a paid version, but it won't ask you for any credit card info, so don't worry about it.) After creating your account, dbt will have a demo project in there for you. You can follow the initial steps of my video below to see where you remove that demo project, and then you can follow the video and steps below to get everything set up and configured.
+
 Below I have outlined the settings that you'll need to use as you set up your project inside dbt Cloud. (I imagine that [this video walkthrough](https://www.dropbox.com/scl/fi/rpzhtd5p5i3qbzt3lgtan/dbt-cloud-setup-and-link.mov?rlkey=j973qfb6swmz6iv4crk492fvn&dl=0) will be helpful for you as you walk through this section.)
 
 1. Create a new project (deleting your old one if necessary; free dbt Cloud only allows 1 project at a time). Name the project the same thing as your assignmen repository (i.e., `is-566-10-dbt-cloud-[github-user]`).
