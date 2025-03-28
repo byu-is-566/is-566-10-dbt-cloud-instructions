@@ -393,7 +393,7 @@ Vague enough for you? 🙂 Sorry. Again, that's part of the experience for this 
 
 ### 5.1: Create a Pull Request
 
-With the improvements we made all collected in the development branch from Task 4, all that remains is to go through the process of merging those changed into the "main" branch of the project repository. The mechanism for doing this is called a _Pull Request_ (usually shortened colloquially to "PR"). Opening a pull request based on the changes in a branch, having the PR reviewed by other team members, and ultimately merging the changes from the development branch into the main branch--these activities are all extremely commonplace on engineering teams, especially in the world of software engineering. But tools like dbt allow use to be just as methodical with our iterative development work on the data in our data warehouse. 
+With the improvements we made all collected in the development branch from Task 4, all that remains is to go through the process of merging those changed into the "main" branch of the project repository. The mechanism for doing this is called a _Pull Request_ (usually shortened colloquially to "PR"). Opening a pull request based on the changes in a branch, having the PR reviewed by other team members, and ultimately merging the changes from the development branch into the main branch--these activities are all extremely commonplace on engineering teams, especially in the world of software engineering. But tools like dbt allow us to be just as methodical with our iterative development work on the data in our data warehouse. 
 
 Obviously we're not working in teams, so we won't be doing any reviews of each other's code. But we are going to still go through the same motions, starting with opening the pull request. You'll do this by visiting your repository page (after pushing your changes to your development branch). You'll likely see a prompt near the top of the screen because you just pushed a branch up, but even if you don't, you can navigate to the 'Pull requests' tab, then "New pull request". Either way should present you with a screen like the one you see below, where you'll see that your development branch is planned to merge into the main branch (see the arrow direction). 
 
@@ -422,12 +422,14 @@ When dbt is able to verify that everything runs without tripping any tests, you'
 > - You should plan to use some exploratory queries to try to investigate any hypotheses
 > - Remember that it's not the end of the world if you aren't able to figure it out. This is a low-stakes environment where no one is going to lose their job over an issue that gets deployed to production. Learn what you can from it and move on with your life.
 
-At this point, if your checks all passed, you can "Merge pull request", at which point you will be see some purple "Pull request successfully merged and closed" messages like you see below.
+At this point, if your checks all passed, you can "Merge pull request", at which point you will be see some purple "Pull request successfully merged and closed" messages like you see below. (And if you can't figure it out, just grab a screenshot showing that you got most of the way there.)
 
 <img src="screenshots/readme_img/pr_merged.png"  width="80%">
 
 > [!IMPORTANT]
-> 📷 If you're able to get the PR checks to pass and merge your code, snag a screenshot of your successful merge. (And congratulations!). Save this screenshot as `task_5.1.png` (or jpg) to the `screenshots` folder in the assignment repository.
+> 📷 If you're able to get the PR checks to pass and merge your code, snag a screenshot of your successful merge. (And congratulations!). Otherwise you can grab a screenshot of the failed merge and call it a day. Save this screenshot as `task_5.1.png` (or jpg) to the `screenshots` folder in the assignment repository.
+>
+> Note that you'll have to save this last screenshot and do another commit and push. Ideally, you'll do this on your main branch (meaning you should switch branches back before you commit and push). I expect there to be some confusion about this, depending on how far you made it, so at minimum, just save, commit and push your screenshots _somewhere_ in your repository (in either branch), and I'll figure out how to track them down on my side.
 
 ---
 
